@@ -9,7 +9,7 @@ git clone https://github.com/rodriguez10011999/Conv3ni3nt.git
 
 python install -r requirements.txt
 ```
-## Creating a symbolic link in /bin directory for more "conv3ni3nce"
+## Creating a symbolic link in /bin directory for more "_conv3ni3nce_"
 ```
 cd /bin
 
