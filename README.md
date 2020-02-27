@@ -1,5 +1,5 @@
 # Conv3ni3nt
-## Simplifiying the pentesters enumeration phase
+## Simplifiying the enumeration phase
 ![What is this](conv3ni3nt.png)
 ## Installation
 ```
