@@ -35,8 +35,9 @@ class Interface:
 	def __init__(self):
 		'''
 		'''
-		
+		# > name of program
 		self.title='Conv3ni3nt'
+		# > figlet font used for title
 		self.font='future'
 		# text colors
 		self.red=196
