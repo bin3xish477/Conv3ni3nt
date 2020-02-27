@@ -79,14 +79,10 @@ class Interface:
 		Generate progress bar with name of tools used
 		params : list of the tools that were used
 		'''
-
-		# > for every tool in our tool list
-		for tool in tool_list:
-			# > this addition is just formating for the colored module
-			tool = '%s' + tool + '%s'
-			# > using tqdm to generate progress bar
-			for p in tqdm(range(100),desc=tool % (fg(self.rancolor), attr(0))+' scan'):
-				# > sleep for 0.2 seconds before next iterations
-				sleep(0.2)
-				# > continue to next iteration
-				continue
+		# > this addition is just formating for the colored module
+		# > using tqdm to generate progress bar
+		for p in tqdm(range(100),desc='%sInitiating scans%s' % (fg(self.rancolor), attr(0))):
+			# > sleep for 0.2 seconds before next iterations
+			sleep(0.2)
+			# > continue to next iteration
+			continue
