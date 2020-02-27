@@ -1,6 +1,6 @@
 # Conv3ni3nt
 ## Simplifiying the enumeration phase
-![What is this](conv3ni3nt.png)
+![Interface](images/conv3ni3nt.png)
 ## Installation
 ```
 cd /opt
