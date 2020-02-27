@@ -1,6 +1,0 @@
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-02-27 14:49 EST
-Nmap scan report for 192.168.91.129
-Host is up (0.000012s latency).
-All 1000 scanned ports on 192.168.91.129 are closed
-
-Nmap done: 1 IP address (1 host up) scanned in 0.18 seconds
