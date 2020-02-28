@@ -34,7 +34,9 @@ except ImportError:
 class Interface:
 	def __init__(self):
 		'''
+		initialize all necessary variables for the interface
 		'''
+
 		# > name of program
 		self.title='Conv3ni3nt'
 		# > figlet font used for title
@@ -50,38 +52,47 @@ class Interface:
 
 	def signature(self):
 		'''
+		print out title and authors
 		'''
 
+		# > declaring Figlet object
 		sig = Figlet(font=self.font)
 
 		print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-
+		# > print title
 		print(sig.renderText(self.title))
-
+		''' print authors and contributors '''
 		print('By : ' + '%sAlexis Rodriguez%s' % (fg(self.purple), attr(0)))
 
 		print('%s\t    aka BinexisHATT%s' % (fg(self.purple), attr(0)))
+
+		print('%sContributor : Colin Reyes%s' % (fg(self.rancolor), attr(0)))
+
+		print('%s\t\taka Jedi9986%s' % (fg(self.rancolor), attr(0)))
 
 		print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
 
 
 	def tools_prompt(self):
 		'''
+		the prompt that is displayed for user to enter tool options
 		'''
-
+		# > prompt for the tools the user would like to use
 		print('%sEnter the tools you use: %s' % (fg(self.red), attr(0)))
-
+		# > show usage like string
 		print('%sE.g. nmap dirb nikto ...%s' % (fg(self.lightyellow), attr(0)))
 
 
-	def progress_bar(self, tool_list):
+	def success_bar(self):
 		'''
 		Generate progress bar with name of tools used
 		params : list of the tools that were used
 		'''
+
 		# > this addition is just formating for the colored module
 		# > using tqdm to generate progress bar
-		for p in tqdm(range(100),desc='%sInitiating scans%s' % (fg(self.rancolor), attr(0))):
+		print('\n')
+		for _ in tqdm(range(100), desc='%sstarting scans%s' % (fg(self.rancolor), attr(0))):
 			# > sleep for 0.2 seconds before next iterations
 			sleep(0.2)
 			# > continue to next iteration
