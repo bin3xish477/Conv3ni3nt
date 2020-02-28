@@ -56,6 +56,10 @@ class Conv3ni3nt:
 		# > list of generated file names
 		self.generated_file_list=[]
 
+
+
+
+
 	def get_tools(self):
 		'''
 		displays the tools prompt and stores the tools in a list
@@ -79,10 +83,13 @@ class Conv3ni3nt:
 		return received_tools
 
 
+
+
+
+
 	def get_tool_options(self):
 		'''
 		will display the tool options prompt and record the options that were passed
-
 		'''
 
 		# > clear the terminal screen
@@ -92,13 +99,13 @@ class Conv3ni3nt:
 		# > our list containing the options for each tool
 		options_list = []
 		# > prompt user for help menu
-		print('%stype "help" for menu%s' % (fg(self.interface.rancolor), attr(0)))
+		print('%sType "help" for menu%s' % (fg(self.interface.rancolor), attr(0)))
 		# > iterate over every tool and prompt user for the desired options
 		for tool in self.tool_list:
 			# > this addition is simply formating for our colored module
 			tool = '%s' + tool + '%s'
 			# > store user input in variable
-			tool_option = input('enter ' + tool % (fg(self.interface.rancolor), attr(0)) + ' options : ')
+			tool_option = input('Enter ' + tool % (fg(self.interface.rancolor), attr(0)) + ' options : ')
 
 			# > if exit is the inputed option, exit the program
 			if 'exit' in tool_option:
@@ -111,11 +118,17 @@ class Conv3ni3nt:
 		return options_list
 
 
+
+
+
+
 	def generate_file_name(self, tool_name, tool_options):
 		'''
 		this is another auxiliary function for generating convient file names
+
 		Params : tool that is being used, the tools options
 		'''
+
 		# > if the option contains the following string
 		# > cut the string out of the option
 		if 'http://' in tool_options:
@@ -123,6 +136,10 @@ class Conv3ni3nt:
 			tool_options = tool_options[7:]
 		# > return the file name
 		return tool_name + ' ' + tool_options
+
+
+
+
 
 
 	def generate_command(self, tool, tool_options):
@@ -141,7 +158,7 @@ class Conv3ni3nt:
 			# > which will display menu for most tools
 			subp.run(tool, shell=True)
 			# > prompt user to verify if they would like to go back to the tool options screen 
-			go_back = input('%stype "back" to go back to tool prompt: %s' % (fg(self.interface.red), attr(0)))
+			go_back = input('%sType "back" to go back to tool prompt: %s' % (fg(self.interface.red), attr(0)))
 			# > if input is back then display options screen
 			if go_back.strip() == 'back':
 				# > return to previous display
@@ -154,13 +171,17 @@ class Conv3ni3nt:
 				file_name = self.generate_file_name(tool, tool_options)
 			# throw exception
 			except:
-				print('%Serror creating file%s' % (fg(self.interface.lightyellow), attr(0)))
+				print('%SError creating a file%s' % (fg(self.interface.lightyellow), attr(0)))
 				# > exit program
 				os.system('clear')
-		# > append file created to class file list		
-		self.file_list.append(file_name
+		# > append file created to class file list
+		self.generated_file_list.append(file_name)
 		# > append command to be executed to class list containing commands
-`	  	self.to_execute.append(command)
+		self.to_execute.append(command)
+
+
+
+
 
 				      
 	def return_to_options_prompt(self, tool):
@@ -174,6 +195,10 @@ class Conv3ni3nt:
 		tool_options = self.get_tool_options()
 		# > a little recursion going on here
 		self.generate_command(tool, tool_options)
+
+
+
+
 
 
 	def execute_all(self, file_arg, command):
@@ -195,12 +220,37 @@ class Conv3ni3nt:
 				text=True)
 
 
+
+
+
+
+	def get_to_execute(self):
+		'''
+		returns list containing commands to execute
+		'''
+
+		return self.to_execute 
+
+
+
+	def get_file_list(self):
+		'''
+		returns list contaninig files to create
+		'''
+		return self.generated_file_list
+
+
+
+
+
+
 # %%%%%%%%%%%%%%%%
 # 	MAIN      
 # %%%%%%%%%%%%%%%%
 def initiate():
 	# > clear screan
 	os.system('clear')
+
 	# > instantiate Interface object
 	display = Interface()
 	# > instantiate Conv3i3nt object
@@ -209,14 +259,25 @@ def initiate():
 	tools_lst = conv3_obj.get_tools()
 	# > returns a list of options specified for each tool
 	tool_options = conv3_obj.get_tool_options()
+
 	# > zip up both the tool and tool options
 	# > and send the variable to the function that'll start the tool
 	for tool, options in zip(tools_lst, tool_options):
 		# > call function to which start tool
 		conv3_obj.generate_command(tool, options)
 
-	display.success_bar()
-	with concurrent.futures(
+	# > retrieve list of generated files names to create
+	files_to_create = conv3_obj.get_file_list()
+	# > retrieve commands to exectue
+	commands = conv3_obj.get_to_execute()
+	# > use threads to execute our scans
+	with concurrent.futures.ThreadPoolExecutor() as executor:
+		# > invoke the execute all funcion with list of files
+		# > and list of commands as argumens and will perform
+		# > these operations asynchronously
+		executor.map(conv3_obj.execute_all, files_to_create, commands)
+		# > display a random success bar
+		display.scan_info(tools_lst, tool_options)
 
 if __name__ == '__main__':
 	initiate()

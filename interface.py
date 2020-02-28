@@ -20,18 +20,24 @@ try:
 	from random import randrange
 	# > import tqdm for creating progress bars
 	from tqdm import tqdm
-	# >	 imprt time for sleep function
+	# >	 import time for sleep function
 	from time import sleep
+	# import threading for repeated functions calls
+	from threading import Timer
 # > handling import error
 except ImportError:
 	print('%s [-] Error importing a module %s' % (fg(196), attr(0)))
 	os.system('exit')
+
+
+
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 		Con3ni3nt Interface
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 class Interface:
+
 	def __init__(self):
 		'''
 		initialize all necessary variables for the interface
@@ -46,8 +52,22 @@ class Interface:
 		self.purple=129
 		self.lightyellow=228
 		self.gray=250
-		# get random number for random color
+		# get random number for random colors
 		self.rancolor=randrange(256)
+		# > change color every 
+		change_color=Timer(1, self.generate_random_color)
+		# start timer
+		change_color.start()
+		
+
+	def generate_random_color(self):
+		'''
+		'''
+		self.rancolor = randrange(256)
+
+
+
+
 
 
 	def signature(self):
@@ -73,27 +93,38 @@ class Interface:
 		print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
 
 
+
+
+
+
 	def tools_prompt(self):
 		'''
 		the prompt that is displayed for user to enter tool options
 		'''
+
 		# > prompt for the tools the user would like to use
 		print('%sEnter the tools you use: %s' % (fg(self.red), attr(0)))
 		# > show usage like string
 		print('%sE.g. nmap dirb nikto ...%s' % (fg(self.lightyellow), attr(0)))
 
 
-	def success_bar(self):
-		'''
-		Generate progress bar with name of tools used
-		params : list of the tools that were used
-		'''
 
-		# > this addition is just formating for the colored module
-		# > using tqdm to generate progress bar
-		print('\n')
-		for _ in tqdm(range(100), desc='%sstarting scans%s' % (fg(self.rancolor), attr(0))):
-			# > sleep for 0.2 seconds before next iterations
-			sleep(0.2)
-			# > continue to next iteration
-			continue
+
+
+
+
+	def scan_info(self, tools, options_for_tools):
+		'''
+		print out info regarding all scans that are running in the
+		background
+
+		params : list of tools used, list of options used for each tool
+		'''
+		
+		print('\n[+] %sInitiating scans...%s' % (fg(self.rancolor), attr(0)))
+
+		for tool, option in zip(tools, options_for_tools):
+
+			sleep(1)
+
+			print('[+] %sRunning scan -- >%s' % (fg(self.rancolor), attr(0)), tool, option)
