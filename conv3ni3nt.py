@@ -219,11 +219,7 @@ class Conv3ni3nt:
 				# > save data as normal text
 				text=True)
 
-
-
-
-
-
+	'''(----) GETTERS (---)'''
 	def get_to_execute(self):
 		'''
 		returns list containing commands to execute
@@ -232,11 +228,11 @@ class Conv3ni3nt:
 		return self.to_execute 
 
 
-
 	def get_file_list(self):
 		'''
 		returns list contaninig files to create
 		'''
+		
 		return self.generated_file_list
 
 
@@ -279,5 +275,6 @@ def initiate():
 		# > display a random success bar
 		display.scan_info(tools_lst, tool_options)
 
+	print('%s[+] All scans have completed!%s' % (fg(self.interface.rancolor), attr(0)))
 if __name__ == '__main__':
 	initiate()

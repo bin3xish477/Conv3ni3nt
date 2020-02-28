@@ -81,7 +81,7 @@ class Interface:
 		print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 		# > print title
 		print(sig.renderText(self.title))
-		''' print authors and contributors '''
+		''' (-------) print authors and contributors (-------) '''
 		print('By : ' + '%sAlexis Rodriguez%s' % (fg(self.purple), attr(0)))
 
 		print('%s\t    aka BinexisHATT%s' % (fg(self.purple), attr(0)))
@@ -124,7 +124,7 @@ class Interface:
 		print('\n[+] %sInitiating scans...%s' % (fg(self.rancolor), attr(0)))
 
 		for tool, option in zip(tools, options_for_tools):
-
+			# > stop for 1 second before continuing loop
 			sleep(1)
-
+			# > print info concerning the scans that are running
 			print('[+] %sRunning scan -- >%s' % (fg(self.rancolor), attr(0)), tool, option)
