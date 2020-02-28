@@ -23,8 +23,8 @@ try:
 	import sys
 	# > import os for performing terminal commands
 	import os
-	# > import threading for threading operations
-	import threading
+	# > import concurrent.futures for improved threading
+	import concurrent.futures
 	# > import subprocess for executing bash commands
 	import subprocess as subp
 	# > import readline to add arrow key functionality
@@ -35,7 +35,7 @@ except ImportError:
 	os.system('exit')
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# 		Conv3ni3nt Class
+# 	Conv3ni3nt Class
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 class Conv3ni3nt:
 	def __init__(self, interface_obj):
@@ -46,12 +46,15 @@ class Conv3ni3nt:
 		'''
 		
 		# > create object to interact with interface
-		self.interface = interface_obj
+		self.interface=interface_obj
 		# > print out signature screen
 		self.interface.signature()
 		# > list of tools that were entered
-		self.tool_list = None
-
+		self.tool_list=[]
+		# > list of comands to execute
+		self.to_execute=[]
+		# > list of generated file names
+		self.generated_file_list=[]
 
 	def get_tools(self):
 		'''
@@ -122,7 +125,7 @@ class Conv3ni3nt:
 		return tool_name + ' ' + tool_options
 
 
-	def start_tool(self, tool, tool_options):
+	def generate_command(self, tool, tool_options):
 		'''
 		start the tool with the options that were specified
 		
@@ -154,13 +157,12 @@ class Conv3ni3nt:
 				print('%Serror creating file%s' % (fg(self.interface.lightyellow), attr(0)))
 				# > exit program
 				os.system('clear')
-			# > create thread
-			thread = threading.Thread(target=self.create_thread,
-										args=(file_name, command,))
-			# > start thread
-			thread.start()
+		# > append file created to class file list		
+		self.file_list.append(file_name
+		# > append command to be executed to class list containing commands
+`	  	self.to_execute.append(command)
 
-
+				      
 	def return_to_options_prompt(self, tool):
 		'''
 		this is an auxiliary function for returning to the tool prompt display
@@ -171,10 +173,10 @@ class Conv3ni3nt:
 		# > display tool options prompt
 		tool_options = self.get_tool_options()
 		# > a little recursion going on here
-		self.start_tool(tool, tool_options)
+		self.generate_command(tool, tool_options)
 
 
-	def create_thread(self, file_arg, command):
+	def execute_all(self, file_arg, command):
 		'''
 		start each tool on a different thread
 
@@ -189,12 +191,12 @@ class Conv3ni3nt:
 				stdout=tool_file, 
 				# > redirecting std err to stdout
 				stderr=subp.STDOUT,
-				# > save data a normal text
+				# > save data as normal text
 				text=True)
 
 
 # %%%%%%%%%%%%%%%%
-# 		MAIN      
+# 	MAIN      
 # %%%%%%%%%%%%%%%%
 def initiate():
 	# > clear screan
@@ -211,10 +213,10 @@ def initiate():
 	# > and send the variable to the function that'll start the tool
 	for tool, options in zip(tools_lst, tool_options):
 		# > call function to which start tool
-		conv3_obj.start_tool(tool, options)
+		conv3_obj.generate_command(tool, options)
 
 	display.success_bar()
-
+	with concurrent.futures(
 
 if __name__ == '__main__':
 	initiate()
