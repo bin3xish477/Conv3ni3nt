@@ -1,1 +1,7 @@
 # All the requires python modules for this program to work successfully
+# for displaying bars
+tqdm
+# for displays fancy title
+pyfiglet
+# for allowing arrow key navigation
+readline
