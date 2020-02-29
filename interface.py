@@ -100,6 +100,7 @@ class Interface:
 
 
 
+
 	def tools_prompt(self):
 		'''
 		the prompt that is displayed for user to enter tool options
@@ -124,10 +125,22 @@ class Interface:
 		params : list of tools used, list of options used for each tool
 		'''
 		
-		print('\n[+] %sInitiating scans...%s' % (fg(self.rancolor), attr(0)))
+		print('[+] %sInitiating scans...%s' % (fg(self.rancolor), attr(0)))
 
 		for tool, option in zip(tools, options_for_tools):
 			# > stop for 1 second before continuing loop
-			sleep(1)
+			sleep(0.5)
 			# > print info concerning the scans that are running
 			print('[+] %sRunning scan -- >%s' % (fg(self.rancolor), attr(0)), tool, option)
+
+
+
+
+
+	def present_completion_bar(self):
+		'''
+		displays completion bar
+		'''
+
+		for _ in tqdm(range(1000000), desc='%sAll scans completed!%s' % (fg(self.purple), attr(0))):
+			pass
