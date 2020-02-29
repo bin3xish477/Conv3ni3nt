@@ -62,7 +62,10 @@ class Interface:
 
 	def generate_random_color(self):
 		'''
+		set the random color variable to a random number 
+		between 1-255 which will determine the color
 		'''
+
 		self.rancolor = randrange(256)
 
 

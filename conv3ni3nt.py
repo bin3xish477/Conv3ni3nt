@@ -240,9 +240,19 @@ class Conv3ni3nt:
 
 
 
+	def handling_tool_input(self):
+		'''
+		'''
+
+
+
+
+
+
 # %%%%%%%%%%%%%%%%
 # 	MAIN      
 # %%%%%%%%%%%%%%%%
+
 def initiate():
 	# > clear screan
 	os.system('clear')
@@ -268,13 +278,18 @@ def initiate():
 	commands = conv3_obj.get_to_execute()
 	# > use threads to execute our scans
 	with concurrent.futures.ThreadPoolExecutor() as executor:
-		# > invoke the execute all funcion with list of files
-		# > and list of commands as argumens and will perform
-		# > these operations asynchronously
-		executor.map(conv3_obj.execute_all, files_to_create, commands)
-		# > display a random success bar
-		display.scan_info(tools_lst, tool_options)
+		print('%s[+] creating threads for scan/s%s' % (fg()))
+		try:
+			# > invoke the execute all funcion with list of files
+			# > and list of commands as argumens and will perform
+			# > these operations asynchronously
+			executor.map(conv3_obj.execute_all, files_to_create, commands)
+			# > display a random success bar
+			display.scan_info(tools_lst, tool_options)
+		except:
+			print('%s[-] error creating thread for scans%s' %  (fg(display.lightyellow), attr(0)))
 
-	print('%s[+] All scans have completed!%s' % (fg(self.interface.rancolor), attr(0)))
+	print('%s[+] All scans have completed!%s' % (fg(self.interface.randrange(256)), attr(0)))
+
 if __name__ == '__main__':
 	initiate()
