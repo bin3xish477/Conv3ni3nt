@@ -142,16 +142,16 @@ class Conv3ni3nt:
 
 
 
-	def generate_command(self, tool, tool_options):
+	def set_file_command_lists(self, tool, tool_options):
 		'''
 		start the tool with the options that were specified
 		
 		Params : the name of the tool, the options for the tool
 		'''
 
-		# > subprocess.run requires a list when stdout is not directed to shell
-		# > so converting our command string to a list)
-		command = (tool + ' ' + ''.join(tool_options)).split()
+		# > get generated command from function that'll create specific 
+		# > commands according to the tool
+		command = self.generate_command(tool, tool_options)
 		# > if user types in help, display the tools menu
 		if tool_options == 'help':
 			# > call the tool without any arguments
@@ -194,7 +194,7 @@ class Conv3ni3nt:
 		# > display tool options prompt
 		tool_options = self.get_tool_options()
 		# > a little recursion going on here
-		self.generate_command(tool, tool_options)
+		self.set_file_command_lists(tool, tool_options)
 
 
 
@@ -219,6 +219,38 @@ class Conv3ni3nt:
 				# > save data as normal text
 				text=True)
 
+
+
+
+
+
+	def generate_command(self, tool, tool_options):
+		'''
+		returns command that will be executed
+
+		params : 
+		'''
+		# > command to return and executed
+		command = ''
+		# > handling special case for dirb because dirb
+		# > sometimes prompts user for input which will halt 
+		# > out programs execution
+		if tool == 'dirb':
+			# > appending -w option to award input prompts
+			# > creating dirb command
+			command = (tool + ' ' + tool_options + ' -w').split()
+		else:
+			# > creating non-dirb command 
+			command = (tool + ' ' + tool_options).split()
+		# > return the command created
+		return command
+
+
+
+
+
+
+
 	'''(----) GETTERS (---)'''
 	def get_to_execute(self):
 		'''
@@ -235,14 +267,6 @@ class Conv3ni3nt:
 		
 		return self.generated_file_list
 
-
-
-
-
-
-	def handling_tool_input(self):
-		'''
-		'''
 
 
 
@@ -269,8 +293,8 @@ def initiate():
 	# > zip up both the tool and tool options
 	# > and send the variable to the function that'll start the tool
 	for tool, options in zip(tools_lst, tool_options):
-		# > call function to which start tool
-		conv3_obj.generate_command(tool, options)
+		# > 
+		conv3_obj.set_file_command_lists(tool, options)
 
 	# > retrieve list of generated files names to create
 	files_to_create = conv3_obj.get_file_list()
@@ -278,7 +302,7 @@ def initiate():
 	commands = conv3_obj.get_to_execute()
 	# > use threads to execute our scans
 	with concurrent.futures.ThreadPoolExecutor() as executor:
-		print('%s[+] creating threads for scan/s%s' % (fg()))
+		print('[+] %screating threads for scan/s%s' % (fg(display.rancolor), attr(0)))
 		try:
 			# > invoke the execute all funcion with list of files
 			# > and list of commands as argumens and will perform
@@ -287,9 +311,10 @@ def initiate():
 			# > display a random success bar
 			display.scan_info(tools_lst, tool_options)
 		except:
-			print('%s[-] error creating thread for scans%s' %  (fg(display.lightyellow), attr(0)))
-
-	print('%s[+] All scans have completed!%s' % (fg(self.interface.randrange(256)), attr(0)))
+			# > print error message concerned with threading
+			print('%s[-] error creating thread for scans\n%s' %  (fg(display.red), attr(0)))
+	# > print out closing statement and bar
+	display.present_completion_bar()
 
 if __name__ == '__main__':
 	initiate()
