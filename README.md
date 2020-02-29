@@ -7,7 +7,7 @@ cd /opt
 
 git clone https://github.com/rodriguez10011999/Conv3ni3nt.git
 
-python install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 ## Create a symbolic link in /bin directory for more "_conv3ni3nce_"
 ```
