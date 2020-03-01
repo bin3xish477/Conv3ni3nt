@@ -372,8 +372,9 @@ if __name__ == '__main__':
 	# > handling control + c interupts
 	except KeyboardInterrupt:
 		print('[-] %sProgram Interrupted!%s' % (fg(88), attr(0)))
-		# > exit program 
-		sys.exit(0)
+		try:
+			# > exit program 
+			sys.exit(0)
 		# > handling error exiting program with sys
 		except SystemExit:
 			# > exit if error
