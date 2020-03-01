@@ -81,7 +81,7 @@ class Interface:
 		# > declaring Figlet object
 		sig = Figlet(font=self.font)
 
-		print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+		print('|%%%%%%%%%%%%%%%%%%%%%%%%%%|')
 		# > print title
 		print(sig.renderText(self.title))
 		''' (-------) print authors and contributors (-------) '''
@@ -89,7 +89,7 @@ class Interface:
 
 		print('Contributor: %s{"Jedi9986"}%s' % (fg(self.purple), attr(0)))
 
-		print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
+		print('|%%%%%%%%%%%%%%%%%%%%%%%%%%%|\n')
 
 
 
