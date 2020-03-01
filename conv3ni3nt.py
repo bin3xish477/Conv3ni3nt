@@ -12,7 +12,6 @@ way to gather information during the information gathering
 phase of a penetration test. The user has access to all tools 
 installed on there machine must only worry about passing
 invalid arguments to the prompts. 
-
 ****************************************************************
 ----------------------------------------------------------------
 '''
