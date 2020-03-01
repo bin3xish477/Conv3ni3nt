@@ -85,11 +85,11 @@ class Interface:
 		# > print title
 		print(sig.renderText(self.title))
 		''' (-------) print authors and contributors (-------) '''
-		print('By : ' + '%sAlexis Rodriguez%s' % (fg(self.purple), attr(0)))
+		print('By: ' + '%sAlexis Rodriguez%s' % (fg(self.purple), attr(0)))
 
 		print('%s\t    aka BinexisHATT%s' % (fg(self.purple), attr(0)))
 
-		print('%sContributor : Colin Reyes%s' % (fg(self.rancolor), attr(0)))
+		print('%sContributor: Colin Reyes%s' % (fg(self.rancolor), attr(0)))
 
 		print('%s\t\taka Jedi9986%s' % (fg(self.rancolor), attr(0)))
 

@@ -99,13 +99,18 @@ class Conv3ni3nt:
 		# > our list containing the options for each tool
 		options_list = []
 		# > prompt user for help menu
-		print('%sType "help" for menu%s' % (fg(self.interface.rancolor), attr(0)))
+		print('%sType "help" for menu\nor "exit" for quiting%s' % (fg(self.interface.rancolor), attr(0)))
+		print('-----------------------------------------')
+		# > inform user about the automatic creation of files
+		print('|%s[Note]%s: do not provide output file     |\n|options because files are automatically|\n|created in a \'convenient\' way.         |' % (fg(9), attr(0)))
+		print('-----------------------------------------')
 		# > iterate over every tool and prompt user for the desired options
 		for tool in self.tool_list:
+			print('%sE.g. "-sC 192.168.0.1"%s' % (fg(self.interface.rancolor), attr(0)))
 			# > this addition is simply formating for our colored module
 			tool = '%s' + tool + '%s'
 			# > store user input in variable
-			tool_option = input('Enter ' + tool % (fg(self.interface.rancolor), attr(0)) + ' options : ')
+			tool_option = input('Enter ' + tool % (fg(self.interface.rancolor), attr(0)) + ' options: ')
 
 			# > if exit is the inputed option, exit the program
 			if 'exit' in tool_option:
