@@ -9,9 +9,12 @@ End date :
 ****************************************************************
 Description : This tool will provide its user's with an easier 
 way to gather information during the information gathering 
-phase of a penetration test. The user has access to all tools 
-installed on there machine must only worry about passing
-invalid arguments to the prompts. 
+phase of a penetration test. The user has access to the most
+common scanning tools installed on there machine must only worry 
+about passing invalid arguments. The purpose of this tool is 
+to use it for performing the longer scans while analyzing the 
+results of any scanning tools that finish faster and then going
+back to inspect the results from you longer scans.
 ****************************************************************
 ----------------------------------------------------------------
 '''
@@ -32,7 +35,22 @@ try:
 except ImportError:
 	print('%s [-] Error importing a module %s' % (fg(196), attr(0)))
 	os.system('exit')
+	
+	
+	
+# > append your tool HERE to be able to use it!	
+VALID_TOOLS = [
+'nmap', 'dirb', 'nikto', 'dirseach', 'gobuster',
+'enum4linux','smbmap', 'onesixtyone', 'fierce', 
+'snmpwalk', 'nmblookup','snmp-check', 'wpscan', 
+'masscan', 'sslscan', 'nbtscan', 'arp-scan', 'dnsenum',
+'sslyze', 'TheHarvester' 
+# if installed uncomment these,'sublist3r', 'dnswalk'
+]
+		
+	
 
+	
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 	Conv3ni3nt Class
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -55,6 +73,7 @@ class Conv3ni3nt:
 		# > list of generated file names
 		self.generated_file_list=[]
 
+		
 
 
 
@@ -251,11 +270,31 @@ class Conv3ni3nt:
 		# > return the command created
 		return command
 
+	
+	
+	
 
 
+	def display_available_tools(self):
+		'''
+		'''
+		
+		print('+----------------------------------------------+')
+		
+		i = 1
+		# > loop through valid tools list
+		for tool in VALID_TOOLS:
+			# > for appearance and organization
+			if i % 5 == 0:
+				print('\n' + tool)
+			else:
+				print(tool)
+			i += 1
+		print('+----------------------------------------------+')
 
 
-
+		
+		
 
 	'''(----) GETTERS (---)'''
 	def get_to_execute(self):
@@ -322,5 +361,10 @@ def initiate():
 	# > print out closing statement and bar
 	display.present_completion_bar()
 
+	
+	
+	
+	
+# > if current module is 'main' start program
 if __name__ == '__main__':
 	initiate()
