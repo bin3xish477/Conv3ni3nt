@@ -367,4 +367,14 @@ def initiate():
 	
 # > if current module is 'main' start program
 if __name__ == '__main__':
-	initiate()
+	try:
+		initiate()
+	# > handling control + c interupts
+	except KeyboardInterrupt:
+		print('Program Interrupted!')
+		# > exit program 
+		sys.exit(0)
+		# > handling error exiting program with sys
+		except SystemExit:
+			# > exit if error
+			os._exit(0)
