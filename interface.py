@@ -89,7 +89,7 @@ class Interface:
 
 		print('Contributor: %s{"Jedi9986"}%s' % (fg(self.purple), attr(0)))
 
-		print('|%%%%%%%%%%%%%%%%%%%%%%%%%%%|\n')
+		print('|%%%%%%%%%%%%%%%%%%%%%%%%%%|\n')
 
 
 
