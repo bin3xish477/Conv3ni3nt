@@ -69,9 +69,10 @@ class Conv3ni3nt:
 		# > display select tools prompt
 		self.interface.tools_prompt()
 		# > the tools that are specified
-		tools = input('%sConv3%s> ' % (fg(self.interface.gray), attr(0)))
+		tools = input('%s(Conv3)%s> ' % (fg(self.interface.orange), attr(0)))
 		# > if the user types in exit
 		if 'exit' in tools:
+			print('[+] %sQuiting program ...%s' % (fg(self.interface.rancolor), attr(0)))
 			# > exit program
 			sys.exit(0)
 		else:
@@ -100,10 +101,10 @@ class Conv3ni3nt:
 		options_list = []
 		# > prompt user for help menu
 		print('%sType "help" for menu\nor "exit" for quiting%s' % (fg(self.interface.rancolor), attr(0)))
-		print('-----------------------------------------')
+		print('+---------------------------------------+')
 		# > inform user about the automatic creation of files
 		print('|%s[Note]%s: do not provide output file     |\n|options because files are automatically|\n|created in a \'convenient\' way.         |' % (fg(9), attr(0)))
-		print('-----------------------------------------')
+		print('+---------------------------------------+')
 		# > iterate over every tool and prompt user for the desired options
 		for tool in self.tool_list:
 			print('%sE.g. "-sC 192.168.0.1"%s' % (fg(self.interface.rancolor), attr(0)))
@@ -114,6 +115,7 @@ class Conv3ni3nt:
 
 			# > if exit is the inputed option, exit the program
 			if 'exit' in tool_option:
+				print('[+] %sQuiting program ...%s' % (fg(self.interface.rancolor), attr(0)))
 				# > exit program
 				sys.exit(0)
 			else:
@@ -178,7 +180,7 @@ class Conv3ni3nt:
 			except:
 				print('%SError creating a file%s' % (fg(self.interface.lightyellow), attr(0)))
 				# > exit program
-				os.system('clear')
+				sys.exit(0)
 		# > append file created to class file list
 		self.generated_file_list.append(file_name)
 		# > append command to be executed to class list containing commands

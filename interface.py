@@ -51,7 +51,7 @@ class Interface:
 		self.red=196
 		self.purple=129
 		self.lightyellow=228
-		self.gray=250
+		self.orange=208
 		# get random number for random colors
 		self.rancolor=randrange(256)
 		# > change color every 
@@ -85,13 +85,9 @@ class Interface:
 		# > print title
 		print(sig.renderText(self.title))
 		''' (-------) print authors and contributors (-------) '''
-		print('By: ' + '%sAlexis Rodriguez%s' % (fg(self.purple), attr(0)))
+		print('By: ' + '%s{"BinexisHATT"}%s' % (fg(self.purple), attr(0)))
 
-		print('%s\t    aka BinexisHATT%s' % (fg(self.purple), attr(0)))
-
-		print('%sContributor: Colin Reyes%s' % (fg(self.rancolor), attr(0)))
-
-		print('%s\t\taka Jedi9986%s' % (fg(self.rancolor), attr(0)))
+		print('Contributor: %s{"Jedi9986"}%s' % (fg(self.purple), attr(0)))
 
 		print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
 
