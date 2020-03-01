@@ -85,9 +85,9 @@ class Interface:
 		# > print title
 		print(sig.renderText(self.title))
 		''' (-------) print authors and contributors (-------) '''
-		print('By: ' + '%s{"BinexisHATT"}%s' % (fg(self.purple), attr(0)))
+		print('by: ' + '%s{"BinexisHATT"}%s' % (fg(self.purple), attr(0)))
 
-		print('Contributor: %s{"Jedi9986"}%s' % (fg(self.purple), attr(0)))
+		print('contributor: %s{"Jedi9986"}%s' % (fg(self.purple), attr(0)))
 
 		print('|%%%%%%%%%%%%%%%%%%%%%%%%%%|\n')
 
