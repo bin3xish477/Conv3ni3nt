@@ -96,31 +96,66 @@ class Conv3ni3nt:
 
 		# > display select tools prompt
 		self.interface.tools_prompt()
+
 		# > the tools that are specified
-		tools = input('%s(Conv3)%s> ' % (fg(self.interface.orange), attr(0)))
+		inputed = input('%s(Conv3)%s> ' % (fg(self.interface.orange), attr(0))).split()
+
 		# > if the user types in exit
-		if 'exit' in tools:
+		if 'exit' in inputed:
 			print('[+] %sQuiting program ...%s' % (fg(45), attr(0)))
 			# > exit program
 			sys.exit(0)
+
+		# > if user types in tools
+		elif 'tools' in inputed:
+			# > if user input is keyword "tools" print available tools
+			self.display_available_tools()
+			# > sleep for half a second
+			sleep(0.5)
+			# > a recursive call to this function
+			self.get_tools()
+
+		
+		# > if user types in shell followed by a command
+		elif inputed[0] == 'shell':
+			# > get command to execute from list
+			cmd = inputed.split()[1:]
+			# > invoke function to execute shell commands
+			self.shell_exec(cmd)
+			# > a recursive call to this function
+			self.get_tools()
+
+
+		# > if user types in menu
+		elif 'menu' in inputed:
+			# > display program command options
+			self.interface.display_menu()
+			# > recursive call to this function
+			self.get_tools()
+
+
 		else:
+			# > clear list of inputed tools
+			self.tool_list.clear()
 			# split the tools specified into a list
-			received_tools = tools.split()
+			self.tool_list = inputed
 
-		# > loop through the list of tools that were given
-		for tool in received_tools:
-			# > if tool is not a valid tool
-			if tool not in VALID_TOOLS:
-				print('\n[-] %sInvalid tool! Try again.%s\n' % (fg(10), attr(0)))
-				# > sleep for one second
-				sleep(1)
-				# > a recursive call to this function to prompt for valid tool
-				self.get_tools()
+			# > loop through the list of tools that were given
+			for tool in self.tool_list:
+				# > if tool is not a valid tool
+				if tool not in VALID_TOOLS:
 
-		# > set tool list
-		self.tool_list = received_tools
+					print('\n[-] %sInvalid tool! Try again.%s\n' % (fg(10), attr(0)))
+					# > clear list of inputed tools
+					self.tool_list.clear()
+					# > sleep for half a second
+					sleep(0.5)
+					# > a recursive call to this function
+					self.get_tools()
+					return
+
 		# > return tool list
-		return received_tools
+		return self.tool_list
 
 
 
@@ -134,16 +169,19 @@ class Conv3ni3nt:
 
 		# > clear the terminal screen
 		os.system('clear')
+
 		# > print out my signature
 		self.interface.signature()
+
 		# > prompt user for help menu
-		print('%sType "help" for menu\nor "exit" for quiting%s' % (fg(self.interface.rancolor), attr(0)))
-		print('+---------------------------------------+')
+		print('%sType "help" for menu or "exit" for quiting%s' % (fg(self.interface.rancolor), attr(0)))
+		print('+----------------------------------------+')
 		# > inform user about the automatic creation of files
-		print('|%s[Note]%s: do not provide output file     |\n|options because files are automatically|\n|created in a \'convenient\' way.         |' % (fg(9), attr(0)))
-		print('+---------------------------------------+')
+		print('|%s[Note]%s: do not provide output file      |\n|options because files are automatically |\n|created in a \'convenient\' way.          |' % (fg(9), attr(0)))
+		print('+----------------------------------------+')
 		# > iterate over every tool and prompt user for the desired options
 		for tool in self.tool_list:
+
 			print('%sE.g. "-sC 192.168.0.1"%s' % (fg(self.interface.rancolor), attr(0)))
 			# > this addition is simply formating for our colored module
 			tool = '%s' + tool + '%s'
@@ -155,9 +193,11 @@ class Conv3ni3nt:
 				print('[+] %sQuiting program ...%s' % (fg(45), attr(0)))
 				# > exit program
 				sys.exit(0)
+
 			else:
 				# > append options to our list containing all tool options
 				self.options_list.append(tool_option)
+
 		# > return list of options
 		return self.options_list
 
@@ -178,6 +218,7 @@ class Conv3ni3nt:
 		if 'http://' in tool_options:
 			# > getting appropiate substring
 			tool_options = tool_options[7:]
+
 		# > return the file name
 		return tool_name + ' ' + tool_options
 
@@ -196,6 +237,7 @@ class Conv3ni3nt:
 		# > get generated command from function that'll create specific 
 		# > commands according to the tool
 		command = self.generate_command(tool, tool_options)
+
 		# > if user types in help, display the tools menu
 		if tool_options == 'help':
 			# > call the tool without any arguments
@@ -209,6 +251,7 @@ class Conv3ni3nt:
 			if go_back.strip() == 'back':
 				# > return to previous display
 				self.return_to_options_prompt(tool)
+
 		# > if the use does not type in help, do the following
 		else:
 			# > try opening file
@@ -220,8 +263,10 @@ class Conv3ni3nt:
 				print('%SError creating a file%s' % (fg(self.interface.lightyellow), attr(0)))
 				# > exit program
 				sys.exit(0)
+
 		# > append file created to class file list
 		self.generated_file_list.append(file_name)
+
 		# > append command to be executed to class list containing commands
 		self.to_execute.append(command)
 
@@ -285,9 +330,11 @@ class Conv3ni3nt:
 			# > appending -w option to award input prompts
 			# > creating dirb command
 			command = (tool + ' ' + tool_options + ' -w').split()
+
 		else:
 			# > creating non-dirb command 
 			command = (tool + ' ' + tool_options).split()
+
 		# > return the command created
 		return command
 
@@ -301,18 +348,23 @@ class Conv3ni3nt:
 		displays all available tools that can be used
 		'''
 		
-		print('+----------------------------------------------+')
+		print('+-----------------------------------------------+')
 		
-		i = 1
+		i = 0
 		# > loop through valid tools list
 		for tool in VALID_TOOLS:
 			# > for appearance and organization
-			if i % 5 == 0:
-				print('\n' + tool)
+			if i % 4 == 0:
+				# do append newline to first element
+				if i == 0:
+					print('(' + tool + ') ', end=' ')
+				else:
+					print('\n' + '(' + tool + ') ', end=' ')
+				i += 1
 			else:
-				print(tool)
-			i += 1
-		print('+----------------------------------------------+')
+				print('(' + tool + ') ', end=' ')
+				i += 1
+		print('\n+-----------------------------------------------+')
 
 
 		
@@ -339,6 +391,17 @@ class Conv3ni3nt:
 
 
 
+	def shell_exec(self, cmd):
+		'''
+		executes and displays shell commands from within program
+		'''
+
+		subp.run(cmd)
+		print('\n')
+
+
+
+
 
 # %%%%%%%%%%%%%%%%
 # 	MAIN      
@@ -357,6 +420,8 @@ def initiate():
 	# > returns a list of options specified for each tool
 	tool_options = conv3_obj.get_tool_options()
 
+	print(tools_lst, tool_options)
+
 	# > zip up both the tool and tool options
 	# > and send the variable to the function that'll start the tool
 	for tool, options in zip(tools_lst, tool_options):
@@ -369,7 +434,7 @@ def initiate():
 	commands = conv3_obj.get_to_execute()
 	# > use threads to execute our scans
 	with concurrent.futures.ThreadPoolExecutor() as executor:
-		print('[+] %screating threads for scan/s%s' % (fg(display.rancolor), attr(0)))
+		print('[+] %sCreating threads for scan/s%s' % (fg(display.rancolor), attr(0)))
 		try:
 			# > invoke the execute all funcion with list of files
 			# > and list of commands as argumens and will perform
@@ -380,6 +445,7 @@ def initiate():
 		except:
 			# > print error message concerned with threading
 			print('%s[-] error creating thread for scans\n%s' %  (fg(display.red), attr(0)))
+
 	# > print out closing statement and bar
 	display.present_completion_bar()
 

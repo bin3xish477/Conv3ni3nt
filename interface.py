@@ -53,6 +53,7 @@ class Interface:
 		self.purple=129
 		self.lightyellow=228
 		self.orange=208
+		self.lightgreen=111
 		# get random number for random colors
 		self.rancolor=randrange(256)
 		# > change color every 
@@ -86,9 +87,9 @@ class Interface:
 		# > print title
 		print(sig.renderText(self.title))
 		''' (-------) print authors and contributors (-------) '''
-		print(' by:%s{"BinexisHATT"}%s' % (fg(self.purple), attr(0)))
+		print(' by: "%sBinexisHATT%s"' % (fg(self.purple), attr(0)))
 
-		print(' contributor:%s{"Jedi9986"}%s' % (fg(self.purple), attr(0)))
+		print(' contributor: "%sJedi9986%s"' % (fg(self.purple), attr(0)))
 
 		print('|%%%%%%%%%%%%%%%%%%%%%%%%%%|\n')
 
@@ -107,6 +108,8 @@ class Interface:
 		print('%sEnter the tools you use: %s' % (fg(self.red), attr(0)))
 		# > show usage like string
 		print('%sE.g. nmap dirb nikto ...%s' % (fg(self.lightyellow), attr(0)))
+
+		print('%sType "menu" for menu%s' % (fg(self.lightgreen), attr(0)))
 
 
 
@@ -141,3 +144,19 @@ class Interface:
 
 		for _ in tqdm(range(1000000), desc='%sAll scans completed!%s' % (fg(self.purple), attr(0))):
 			pass
+
+
+
+
+
+	def display_menu(self):
+		'''
+		displays menu from tool prompt
+		'''
+
+		print('%s+-----------------------------------------------+%s' % (fg(self.rancolor), attr(0)))
+		print(' | Options :\t\t\t\t       |')
+		print(' | 1. "tools" to show available tools          |')
+		print(' | 2. "shell" followed by shell command        |\n |    to execute shell commands within program |')
+		print(' | 3. "exit" to exit program\t               |')
+		print('%s+-----------------------------------------------+%s' % (fg(self.rancolor), attr(0)))
