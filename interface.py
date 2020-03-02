@@ -27,6 +27,7 @@ try:
 # > handling import error
 except ImportError:
 	print('%s [-] Error importing a module %s' % (fg(196), attr(0)))
+	# > exit program
 	os.system('exit')
 
 
@@ -85,9 +86,9 @@ class Interface:
 		# > print title
 		print(sig.renderText(self.title))
 		''' (-------) print authors and contributors (-------) '''
-		print('by: ' + '%s{"BinexisHATT"}%s' % (fg(self.purple), attr(0)))
+		print(' by:%s{"BinexisHATT"}%s' % (fg(self.purple), attr(0)))
 
-		print('contributor: %s{"Jedi9986"}%s' % (fg(self.purple), attr(0)))
+		print(' contributor:%s{"Jedi9986"}%s' % (fg(self.purple), attr(0)))
 
 		print('|%%%%%%%%%%%%%%%%%%%%%%%%%%|\n')
 

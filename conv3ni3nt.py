@@ -31,21 +31,29 @@ try:
 	import subprocess as subp
 	# > import readline to add arrow key functionality
 	import readline
+	# > import time for sleeping function
+	from time import sleep
 # > check for importing error
 except ImportError:
 	print('%s [-] Error importing a module %s' % (fg(196), attr(0)))
+	# > exit program
 	os.system('exit')
 	
 	
 	
 # > append your tool HERE to be able to use it!	
 VALID_TOOLS = [
-'nmap', 'dirb', 'nikto', 'dirseach', 'gobuster',
-'enum4linux','smbmap', 'onesixtyone', 'fierce', 
-'snmpwalk', 'nmblookup','snmp-check', 'wpscan', 
-'masscan', 'sslscan', 'nbtscan', 'arp-scan', 'dnsenum',
+
+'nmap', 'dirb', 'nikto',
+'dirsearch','gobuster','enum4linux',
+'smbmap', 'onesixtyone','fierce',
+'snmpwalk', 'nmblookup','snmp-check',
+'wpscan','masscan', 'sslscan',
+'nbtscan', 'arp-scan', 'dnsenum',
 'sslyze', 'TheHarvester' 
-# if installed uncomment these,'sublist3r', 'dnswalk'
+# if installed uncomment these:
+#'sublist3r', 'dnswalk'
+
 ]
 		
 	
@@ -72,6 +80,8 @@ class Conv3ni3nt:
 		self.to_execute=[]
 		# > list of generated file names
 		self.generated_file_list=[]
+		# > our list containing the options for each tool
+		self.options_list = []
 
 		
 
@@ -90,12 +100,23 @@ class Conv3ni3nt:
 		tools = input('%s(Conv3)%s> ' % (fg(self.interface.orange), attr(0)))
 		# > if the user types in exit
 		if 'exit' in tools:
-			print('[+] %sQuiting program ...%s' % (fg(self.interface.rancolor), attr(0)))
+			print('[+] %sQuiting program ...%s' % (fg(45), attr(0)))
 			# > exit program
 			sys.exit(0)
 		else:
 			# split the tools specified into a list
 			received_tools = tools.split()
+
+		# > loop through the list of tools that were given
+		for tool in received_tools:
+			# > if tool is not a valid tool
+			if tool not in VALID_TOOLS:
+				print('\n[-] %sInvalid tool! Try again.%s\n' % (fg(10), attr(0)))
+				# > sleep for one second
+				sleep(1)
+				# > a recursive call to this function to prompt for valid tool
+				self.get_tools()
+
 		# > set tool list
 		self.tool_list = received_tools
 		# > return tool list
@@ -115,8 +136,6 @@ class Conv3ni3nt:
 		os.system('clear')
 		# > print out my signature
 		self.interface.signature()
-		# > our list containing the options for each tool
-		options_list = []
 		# > prompt user for help menu
 		print('%sType "help" for menu\nor "exit" for quiting%s' % (fg(self.interface.rancolor), attr(0)))
 		print('+---------------------------------------+')
@@ -133,14 +152,14 @@ class Conv3ni3nt:
 
 			# > if exit is the inputed option, exit the program
 			if 'exit' in tool_option:
-				print('[+] %sQuiting program ...%s' % (fg(self.interface.rancolor), attr(0)))
+				print('[+] %sQuiting program ...%s' % (fg(45), attr(0)))
 				# > exit program
 				sys.exit(0)
 			else:
 				# > append options to our list containing all tool options
-				options_list.append(tool_option)
+				self.options_list.append(tool_option)
 		# > return list of options
-		return options_list
+		return self.options_list
 
 
 
@@ -182,6 +201,8 @@ class Conv3ni3nt:
 			# > call the tool without any arguments
 			# > which will display menu for most tools
 			subp.run(tool, shell=True)
+			# > erase all options from option list
+			self.options_list.clear()
 			# > prompt user to verify if they would like to go back to the tool options screen 
 			go_back = input('%sType "back" to go back to tool prompt: %s' % (fg(self.interface.red), attr(0)))
 			# > if input is back then display options screen
