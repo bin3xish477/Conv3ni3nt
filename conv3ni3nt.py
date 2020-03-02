@@ -298,6 +298,7 @@ class Conv3ni3nt:
 
 	def display_available_tools(self):
 		'''
+		displays all available tools that can be used
 		'''
 		
 		print('+----------------------------------------------+')
