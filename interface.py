@@ -157,6 +157,6 @@ class Interface:
 		print('%s+-----------------------------------------------+%s' % (fg(self.rancolor), attr(0)))
 		print(' | Options :\t\t\t\t       |')
 		print(' | 1. "tools" to show available tools          |')
-		print(' | 2. "shell" followed by shell command        |\n |    to execute shell commands within program |')
+		print(' | 2. "shell" followed by command\t       |\n |    to execute shell commands within program |')
 		print(' | 3. "exit" to exit program\t               |')
 		print('%s+-----------------------------------------------+%s' % (fg(self.rancolor), attr(0)))

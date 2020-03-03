@@ -33,6 +33,7 @@ try:
 	import readline
 	# > import time for sleeping function
 	from time import sleep
+	
 # > check for importing error
 except ImportError:
 	print('%s [-] Error importing a module %s' % (fg(196), attr(0)))
@@ -43,7 +44,6 @@ except ImportError:
 	
 # > append your tool HERE to be able to use it!	
 VALID_TOOLS = [
-
 'nmap', 'dirb', 'nikto',
 'dirsearch','gobuster','enum4linux',
 'smbmap', 'onesixtyone','fierce',
@@ -53,7 +53,6 @@ VALID_TOOLS = [
 'sslyze', 'TheHarvester' 
 # if installed uncomment these:
 #'sublist3r', 'dnswalk'
-
 ]
 		
 	
@@ -72,14 +71,19 @@ class Conv3ni3nt:
 		
 		# > create object to interact with interface
 		self.interface=interface_obj
+
 		# > print out signature screen
 		self.interface.signature()
+
 		# > list of tools that were entered
 		self.tool_list=[]
+
 		# > list of comands to execute
 		self.to_execute=[]
+
 		# > list of generated file names
 		self.generated_file_list=[]
+
 		# > our list containing the options for each tool
 		self.options_list = []
 
@@ -103,6 +107,7 @@ class Conv3ni3nt:
 		# > if the user types in exit
 		if 'exit' in inputed:
 			print('[+] %sQuiting program ...%s' % (fg(45), attr(0)))
+
 			# > exit program
 			sys.exit(0)
 
@@ -110,29 +115,52 @@ class Conv3ni3nt:
 		elif 'tools' in inputed:
 			# > if user input is keyword "tools" print available tools
 			self.display_available_tools()
-			# > sleep for half a second
-			sleep(0.5)
+
+			# > sleep for 0.2 seconds
+			sleep(0.2)
+
 			# > a recursive call to this function
 			self.get_tools()
 
 		
 		# > if user types in shell followed by a command
-		elif inputed[0] == 'shell':
+		elif inputed[0] == 'shell' and inputed[1:]:
 			# > get command to execute from list
-			cmd = inputed.split()[1:]
+			cmd = inputed[1:]
+
 			# > invoke function to execute shell commands
 			self.shell_exec(cmd)
+
 			# > a recursive call to this function
 			self.get_tools()
 
+		# > if user types in shell without a command
+		elif inputed[0] == 'shell' and not inputed[1:]:
+			# > print notification of missing command
+			print('Error: no command was passed after "shell"')
+			print('Please try again...')
+
+			# > a recursive call to this function
+			self.get_tools()
 
 		# > if user types in menu
 		elif 'menu' in inputed:
 			# > display program command options
 			self.interface.display_menu()
+
+			# > sleep for 0.2 seconds
+			sleep(0.2)
+
 			# > recursive call to this function
 			self.get_tools()
 
+		# > if user types in clear
+		elif 'clear' in inputed:
+			# > clear screen
+			os.system('clear')
+
+			# > recursive call to this function
+			self.get_tools()
 
 		else:
 			# > clear list of inputed tools
@@ -148,8 +176,10 @@ class Conv3ni3nt:
 					print('\n[-] %sInvalid tool! Try again.%s\n' % (fg(10), attr(0)))
 					# > clear list of inputed tools
 					self.tool_list.clear()
-					# > sleep for half a second
-					sleep(0.5)
+
+					# > sleep for 0.2 seconds
+					sleep(0.2)
+
 					# > a recursive call to this function
 					self.get_tools()
 					return
@@ -176,9 +206,11 @@ class Conv3ni3nt:
 		# > prompt user for help menu
 		print('%sType "help" for menu or "exit" for quiting%s' % (fg(self.interface.rancolor), attr(0)))
 		print('+----------------------------------------+')
+
 		# > inform user about the automatic creation of files
 		print('|%s[Note]%s: do not provide output file      |\n|options because files are automatically |\n|created in a \'convenient\' way.          |' % (fg(9), attr(0)))
 		print('+----------------------------------------+')
+
 		# > iterate over every tool and prompt user for the desired options
 		for tool in self.tool_list:
 
@@ -243,8 +275,10 @@ class Conv3ni3nt:
 			# > call the tool without any arguments
 			# > which will display menu for most tools
 			subp.run(tool, shell=True)
+
 			# > erase all options from option list
 			self.options_list.clear()
+
 			# > prompt user to verify if they would like to go back to the tool options screen 
 			go_back = input('%sType "back" to go back to tool prompt: %s' % (fg(self.interface.red), attr(0)))
 			# > if input is back then display options screen
@@ -284,6 +318,7 @@ class Conv3ni3nt:
 
 		# > display tool options prompt
 		tool_options = self.get_tool_options()
+
 		# > a little recursion going on here
 		self.set_file_command_lists(tool, tool_options)
 
@@ -355,15 +390,18 @@ class Conv3ni3nt:
 		for tool in VALID_TOOLS:
 			# > for appearance and organization
 			if i % 4 == 0:
-				# do append newline to first element
+
 				if i == 0:
 					print('(' + tool + ') ', end=' ')
+
 				else:
 					print('\n' + '(' + tool + ') ', end=' ')
 				i += 1
+
 			else:
 				print('(' + tool + ') ', end=' ')
 				i += 1
+
 		print('\n+-----------------------------------------------+')
 
 
@@ -413,25 +451,28 @@ def initiate():
 
 	# > instantiate Interface object
 	display = Interface()
+
 	# > instantiate Conv3i3nt object
 	conv3_obj = Conv3ni3nt(display)
+
 	# > returns list of inputed tools
 	tools_lst = conv3_obj.get_tools()
+
 	# > returns a list of options specified for each tool
 	tool_options = conv3_obj.get_tool_options()
-
-	print(tools_lst, tool_options)
 
 	# > zip up both the tool and tool options
 	# > and send the variable to the function that'll start the tool
 	for tool, options in zip(tools_lst, tool_options):
-		# > 
+		# > creating file and command lists
 		conv3_obj.set_file_command_lists(tool, options)
 
 	# > retrieve list of generated files names to create
 	files_to_create = conv3_obj.get_file_list()
+
 	# > retrieve commands to exectue
 	commands = conv3_obj.get_to_execute()
+
 	# > use threads to execute our scans
 	with concurrent.futures.ThreadPoolExecutor() as executor:
 		print('[+] %sCreating threads for scan/s%s' % (fg(display.rancolor), attr(0)))
@@ -440,8 +481,10 @@ def initiate():
 			# > and list of commands as argumens and will perform
 			# > these operations asynchronously
 			executor.map(conv3_obj.execute_all, files_to_create, commands)
+
 			# > display a random success bar
 			display.scan_info(tools_lst, tool_options)
+
 		except:
 			# > print error message concerned with threading
 			print('%s[-] error creating thread for scans\n%s' %  (fg(display.red), attr(0)))
@@ -455,7 +498,7 @@ def initiate():
 	
 # > if current module is 'main' start program
 if __name__ == '__main__':
-	try:
+	try: # > begin program
 		initiate()
 	# > handling control + c interupts
 	except KeyboardInterrupt:
