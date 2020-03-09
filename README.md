@@ -9,9 +9,9 @@ Conv3ni3nt utilizes the the subclass **ThreadPoolExecutor** that is part of the 
 For more on the concurrent.futures module check out the links below:
 
 http://masnun.com/2016/03/29/python-a-quick-introduction-to-the-concurrent-futures-module.html
-------------------------------------------------------------------------------------------------------------------------------------
+
 https://pythonhosted.org/futures/
-------------------------------------------------------------------------------------------------------------------------------------
+____________________________________________________________________________________________________________________________________
 
 ### Simplifiying the enumeration phase
 ![Interface](images/conv3ni3nt.png)
