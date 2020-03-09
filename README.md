@@ -13,5 +13,5 @@ pip3 install -r requirements.txt
 ```
 cd /bin
 
-ln -s /opt/Conv3ni3nt/conv3ni3nt.py conv3ni3nt
+ln -s /opt/Conv3ni3nt/conv3ni3nt.py conv
 ```
