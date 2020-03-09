@@ -4,9 +4,9 @@ Conv3ni3nt was made to simplify the scanning process of a pentration test. All o
 
 **Note**: appending tools that prompt for user input during scans will cause the program to run indefinitely. Avoid these kinds of tools.
 # About Conv3ni3nt
-Conv3ni3nt uses the the subclass **ThreadPoolExecutor** found in the abstract class **Executor** that is itself part of the concurrent.futures module. This subclass allocates threads for program to use to perform specified tasks. In Conv3ni3nt's case, we are using **ThreadPoolExecutor** to asynchronously run scans using multi threading.  
+Conv3ni3nt utilizes the the subclass **ThreadPoolExecutor** that is part of the abstract class **Executor** found in the concurrent.futures module. This subclass allocates threads for the program to use to execute callables. In Conv3ni3nt's case, we are using **ThreadPoolExecutor** to asynchronously run scans using multi threading.  
 
-For more on the concurrent.futures module check out these links:
+For more on the concurrent.futures module check out the links below:
 http://masnun.com/2016/03/29/python-a-quick-introduction-to-the-concurrent-futures-module.html
 https://pythonhosted.org/futures/
 
