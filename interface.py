@@ -128,10 +128,10 @@ class Interface:
 		print('[+] %sInitiating scans...%s' % (fg(self.rancolor), attr(0)))
 
 		for tool, option in zip(tools, options_for_tools):
-			# > stop for 1 second before continuing loop
-			sleep(0.5)
+			# > stop for 2/10 of a second before next iteration
+			sleep(0.2)
 			# > print info concerning the scans that are running
-			print('[+] %sRunning scan -- >%s' % (fg(self.rancolor), attr(0)), tool, option)
+			print('[+] %sRunning scan%s -- >' % (fg(self.rancolor), attr(0)), tool, option)
 
 
 

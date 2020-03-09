@@ -4,7 +4,7 @@
 ----------------------------------------------------------------
 Author : Alexis Rodriguez
 Start date : 2020-02-26
-End date : 
+End date : 2020-
 
 ****************************************************************
 Description : This tool will provide its user's with an easier 
@@ -18,6 +18,8 @@ back to inspect the results from you longer scans.
 ****************************************************************
 ----------------------------------------------------------------
 '''
+
+
 try:
 	# > import all objects from interface module
 	from interface import *
@@ -25,7 +27,7 @@ try:
 	import sys
 	# > import os for performing terminal commands
 	import os
-	# > import concurrent.futures for improved threading
+	# > import concurrent.futures for threading
 	import concurrent.futures
 	# > import subprocess for executing bash commands
 	import subprocess as subp
@@ -70,19 +72,19 @@ class Conv3ni3nt:
 		'''
 		
 		# > create object to interact with interface
-		self.interface=interface_obj
+		self.interface = interface_obj
 
 		# > print out signature screen
 		self.interface.signature()
 
 		# > list of tools that were entered
-		self.tool_list=[]
+		self.tool_list = []
 
 		# > list of comands to execute
-		self.to_execute=[]
+		self.to_execute = []
 
 		# > list of generated file names
-		self.generated_file_list=[]
+		self.generated_file_list = []
 
 		# > our list containing the options for each tool
 		self.options_list = []
@@ -182,7 +184,6 @@ class Conv3ni3nt:
 
 					# > a recursive call to this function
 					self.get_tools()
-					return
 
 		# > return tool list
 		return self.tool_list
@@ -208,13 +209,13 @@ class Conv3ni3nt:
 		print('+----------------------------------------+')
 
 		# > inform user about the automatic creation of files
-		print('|%s[Note]%s: do not provide output file      |\n|options because files are automatically |\n|created in a \'convenient\' way.          |' % (fg(9), attr(0)))
+		print('|%s[Note]%s: do not provide output file      |\n|options because files are automatically |\n|created in a \'convenient\' way.          |'
+				% (fg(9), attr(0)))
 		print('+----------------------------------------+')
 
+		print('%sE.g. "-sC 192.168.0.1"%s' % (fg(self.interface.rancolor), attr(0)))
 		# > iterate over every tool and prompt user for the desired options
 		for tool in self.tool_list:
-
-			print('%sE.g. "-sC 192.168.0.1"%s' % (fg(self.interface.rancolor), attr(0)))
 			# > this addition is simply formating for our colored module
 			tool = '%s' + tool + '%s'
 			# > store user input in variable
@@ -366,6 +367,13 @@ class Conv3ni3nt:
 			# > creating dirb command
 			command = (tool + ' ' + tool_options + ' -w').split()
 
+		# > tell nikto not to ask about submitting updates
+		# > without this argument the program will freeze 
+		# > indefinitely
+		elif tool == 'nikto':
+			# > append "-ask no" to evade the the prompt
+			command = (tool + ' ' + tool_options + ' -ask no').split()
+
 		else:
 			# > creating non-dirb command 
 			command = (tool + ' ' + tool_options).split()
@@ -433,9 +441,17 @@ class Conv3ni3nt:
 		'''
 		executes and displays shell commands from within program
 		'''
-
-		subp.run(cmd)
-		print('\n')
+		try:
+			print('\n')
+			# > execute shell command
+			subp.run(cmd ,stderr=subp.DEVNULL)
+			print('\n')
+		# > handling invalids commands
+		except:
+			print('[-] Invalid command!')
+			sleep(0.2)
+			# > return to tools prompt
+			self.get_tools()
 
 
 
