@@ -47,7 +47,7 @@ except ImportError:
 # > append your tool HERE to be able to use it!	
 VALID_TOOLS = [
 'nmap', 'dirb', 'nikto',
-'dirsearch','gobuster','enum4linux',
+,'gobuster','enum4linux',
 'smbmap', 'onesixtyone','fierce',
 'snmpwalk', 'nmblookup','snmp-check',
 'wpscan','masscan', 'sslscan',
